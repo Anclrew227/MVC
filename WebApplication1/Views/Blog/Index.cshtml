@@ -1,0 +1,56 @@
+﻿@model WebApplication1.ViewModels.BlogViewModal
+
+@{
+    ViewBag.Title = User.Identity.Name + "的部落格";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/jQuery/Article/ArticleList.js")
+}
+<style>
+    #DataList .form1 {
+        margin-top: 20px
+    }
+
+    .body-content {
+        width: 100% !important
+    }
+</style>
+
+<div id="BlogBlock">
+    <div class="page-header">
+        <h1>@Html.ActionLink(Model.Member.Account + "的部落格", "Index", "Blog", new { Account = Model.Member.Account }, null)</h1>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div id="ShowPopularBlock">
+            @Html.Action("ShowPopular", "Blog", new { Account = Model.Member.Account })
+        </div>
+        <div id="ArticleListBlock">
+            @Html.Action("List", "Blog", new { Account = Model.Member.Account })
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+        <table>
+            <tr>
+                <td>
+                    <img width="200" src="@Html.Encode(Url.Content("~/Upload/" + Model.Member.Image))">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Member.Account)：@Model.Member.Account
+                </td>
+            </tr>
+        </table>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @Ajax.ActionLink("新增文章", "CreateArticle", "Blog", new { }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "CreateArticleModal" }, new { @class = "btn btn-primary", @data_toggle = "modal", @data_target = "#CreateArticleModal" })
+            <div id="CreateArticleModal" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true"></div>
+        }
+        else
+        {
+            <text>要新增文章，請先</text>
+            @Html.ActionLink("登入", "Login", "Members")
+        }
+    </div>
+</div>

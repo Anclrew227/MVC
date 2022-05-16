@@ -1,0 +1,50 @@
+﻿@model WebApplication1.ViewModels.CartBuyViewModel
+
+@{
+    ViewBag.Title = User.Identity.Name + "的購物車";
+}
+
+<h2>購物車內容</h2>
+<table>
+    @if (!Model.DataList.Count.Equals(0))
+    {
+        <thead>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(p => p.DataList[0].Item.Name)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(p => p.DataList[0].Item.Price)
+                </td>
+                <td></td>
+            </tr>
+        </thead>
+        foreach (var item in Model.DataList)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Item.Name, "Item", "Item", new { Id = item.Item.Id }, null)
+                </td>
+                <td>
+                    @item.Item.Price
+                </td>
+                <td>
+                    @Html.ActionLink("從購物車中取出", "Pop", new { Id = item.Item.Id, toPage = "Cart" })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>
+                購物車內無商品
+            </td>
+        </tr>
+    }
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

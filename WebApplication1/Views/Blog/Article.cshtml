@@ -1,0 +1,82 @@
+﻿@model WebApplication1.ViewModels.ArticleViewModal
+
+@{
+    ViewBag.Title = Model.article.Title;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/jQuery/Article/Article.js")
+    @Scripts.Render("~/jQuery/Message/MessageList.js")
+}
+
+<style>
+    #DataList .form1 {
+        margin-top: 20px
+    }
+
+    .body-content {
+        width: 100% !important
+    }
+</style>
+
+<div class="page-header">
+    <h1>@Html.ActionLink(User.Identity.Name + "的部落格", "Index", "Blog", new { Account = Model.article.Account }, null)</h1>
+</div>
+<div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Html.DisplayNameFor(model => model.article.Account)@Model.article.Account
+        </div>
+        <div class="panel-body">
+            @Html.DisplayNameFor(model => model.article.Content)@Html.Raw(Model.article.Content.Replace("\r\n", "<br />"))
+            <div class="text-right">
+                @Html.DisplayNameFor(model => model.article.Watch)@Model.article.Watch
+            </div>
+        </div>
+        <div class="modal-footer">
+            @Html.DisplayNameFor(model => model.article.Account)@Model.article.Account
+        </div>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (Model.article.Account == User.Identity.Name)
+        {
+            if (Model.DataList.Count.Equals(0))
+            {
+                @Ajax.ActionLink("修改文章", "UpdateArticle", "Blog", new { A_Id = Model.article.A_Id }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "UpdateArticleModal" }, new { @class = "btn btn-primary", @data_toggle = "modal", @data_target = "#UpdateArticleModal" })
+                <div id="UpdateArticleModal" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true"></div>
+            }
+            @Html.ActionLink("刪除文章", "DeleteArticle", "Blog", new { A_Id = Model.article.A_Id }, new { @class = "btn btn-danger" })
+        }
+        else
+        {
+            <text>非此文章作者不可進行修改、刪除動作</text>
+        }
+    }
+    else
+    {
+        <text>要修改或刪除文章，請先</text>
+        @Html.ActionLink("登入", "Login", "Members")
+    }
+    <div id="MessageListBlock">
+        @Html.Action("Message", "Blog", new { A_Id = Model.article.A_Id })
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-4">
+    <table>
+        <tr>
+            <td>
+                <img width="200" src="@Html.Encode(Url.Content("~/Upload/" + Model.article.Member.Image))">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.article.Member.Account)：@Model.article.Member.Name
+            </td>
+        </tr>
+    </table>
+    <div id="ArticleListBlock">
+        @Html.Action("List", "Blog", new { Account = Model.article.Account })
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model WebApplication1.ViewModels.HomeViewModel
+
+@{
+    ViewBag.Title = "我的購物網站";
+}
+
+<style>
+    #DataList, #form1 {
+        margin-top: 20px;
+    }
+
+    .body-content {
+        width: 100% !important;
+    }
+
+    .btn-default {
+        width: 80%;
+    }
+</style>
+
+@Html.AntiForgeryToken()
+
+@Html.Action("Carousel","Album",null)
+
+<div id="HomeBlock">
+    <div id="LeftBlock" class="col-lg-8 col-md-8 col-sm-8">
+        @Html.Action("Index","Item",null)
+    </div>
+    <div id="RigthBlock" class="col-lg-4 col-md-4 col-sm-4">
+        @Html.Action("GetDataList")
+    </div>
+</div>

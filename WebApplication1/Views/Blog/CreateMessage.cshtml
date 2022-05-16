@@ -1,0 +1,16 @@
+﻿@model WebApplication1.Models.Message
+
+
+@using (Ajax.BeginForm("CreateMessage", "Blog", new { A_Id = ViewData["A_Id"] }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "DataList" }))
+{
+    <table>
+        <tr>
+            <td>
+                @Html.TextBoxFor(model => model.Content, new { @class = "form-control" })
+            </td>
+            <td>
+                <input id="createmessage" type="submit" class="btn btn-primary" value="來留言" />
+            </td>
+        </tr>
+    </table>
+}

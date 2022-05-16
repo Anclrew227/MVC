@@ -1,0 +1,79 @@
+﻿@model WebApplication1.ViewModels.RegisterMembersViewModel
+
+@{
+    ViewBag.Title = "註冊";
+}
+
+<h2>註冊</h2>
+
+
+@using (Html.BeginForm("Register","Members",FormMethod.Post,new { enctype = "multipart/form-data" }))
+{
+<table>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.member.Account)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.member.Account)
+            @Html.ValidationMessageFor(model => model.member.Account)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.Password)
+        </td>
+        <td>
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.PasswordCheck)
+        </td>
+        <td>
+            @Html.PasswordFor(model => model.PasswordCheck)
+            @Html.ValidationMessageFor(model => model.PasswordCheck)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.member.Name)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.member.Name)
+            @Html.ValidationMessageFor(model => model.member.Name)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.member.Email)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.member.Email)
+            @Html.ValidationMessageFor(model => model.member.Email)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.MemberImage)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.MemberImage,new { type = "file" })
+            @Html.ValidationMessageFor(model => model.MemberImage)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="註冊" />
+        </td>
+    </tr>
+</table>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
